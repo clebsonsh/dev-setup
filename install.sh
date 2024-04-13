@@ -3,11 +3,11 @@ set -e
 PHP_VERSION="8.3"
 
 if ! grep -q "^deb .*universe" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
-  sudo add-apt-repository universe -yqq
+  sudo add-apt-repository universe -y
 fi
 
 if ! grep -q "^deb .*ondrej/php" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
-  sudo add-apt-repository ppa:ondrej/php -yqq
+  sudo add-apt-repository ppa:ondrej/php -y
 fi
 
 sudo apt update
