@@ -181,6 +181,8 @@ if ! [ -x "$(command -v node)" ]; then
   nvm install 20
   npm install -g yarn
   yarn config set -- --emoji true
+
+  nvm use 20
 fi
 
 echo "
