@@ -4,20 +4,20 @@ set -e
 echo "
   Development Environment Setup for Full-Stack Laravel Development
 
-  This script facilitates the installation of the following components necessary for Full-Stack Laravel development:
+  This script automates the installation of the essential components required for Full-Stack Laravel development:
 
-    PHP (choose from versions 8.3, 8.2, 8.1, 8.0, 7.4)
-    Composer
-    Nginx
-    MySQL
-    Laravel Valet
-    Laravel Installer
-    NVM (Node Version Manager)
-    Node.js
-    Yarn
-
-  Simply run the script to automate the setup process.
+    - PHP (choose from versions 8.3, 8.2, 8.1, 8.0, 7.4)
+    - Composer
+    - Nginx
+    - MySQL
+    - Laravel Valet
+    - Laravel Installer
+    - NVM (Node Version Manager)
+    - Node.js
+    - Yarn
 "
+
+# Select PHP version if PHP is not already installed
 if ! [ -x "$(command -v php)" ]; then
   echo "
     Select a PHP version to install...
@@ -27,43 +27,45 @@ if ! [ -x "$(command -v php)" ]; then
     if ! [ -z "$PHP_VERSION" ]
     then
       echo "
-        php$PHP_VERSION will be installed...
+        Installing PHP $PHP_VERSION...
       "
       break
     fi
   done
 fi
 
+# Add required repositories if not already added
 if ! grep -q "^deb .*universe" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
   echo "
-    Adding universe repository...
+    Adding 'universe' repository...
   "
   sudo add-apt-repository universe -y
 fi
 
 if ! grep -q "^deb .*ondrej/php" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
   echo "
-    Adding ondrej/php ppa repository...
+    Adding 'ondrej/php' PPA repository...
   "
   sudo add-apt-repository ppa:ondrej/php -y
 fi
 
+# Update system packages
 echo "
-  Instaling system updates...
+  Updating system packages...
 "
 sudo apt update
 sudo apt upgrade -y
 
+# Install/update Laravel Valet dependencies
 echo "
-  Instaling/updating Laravel Valet dependencies...
-  (git, vim, network, libnss3-tools, jq, xsel, curl, unzip)
+  Installing/updating dependencies for Laravel Valet...
 "
-
 sudo apt install git vim network-manager libnss3-tools jq xsel curl unzip -y
 
+# Install PHP and required PHP extensions
 if ! [ -x "$(command -v php)" ]; then
   echo "
-    Installing PHP$PHP_VERSION and Laravel php dependecies...
+    Installing PHP $PHP_VERSION and required extensions for Laravel...
   "
   sudo apt install "php$PHP_VERSION-fpm" -y
   sudo apt install "php$PHP_VERSION" \
@@ -83,16 +85,18 @@ if ! [ -x "$(command -v php)" ]; then
     "php$PHP_VERSION-bcmath" -yqq
 fi
 
+# Install Composer
 if ! [ -x "$(command -v composer)" ]; then
   echo "
     Installing Composer...
   "
-  curl -sS https://getcomposer.org/installer | php && sudo mv composer.phar /usr/local/bin/
+  curl -sS https://getcomposer.org/installer | php && sudo mv composer.phar /usr/local/bin/composer
   sudo ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
   echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"' >> ~/.bashrc
   export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 fi
 
+# Install Laravel Valet
 if ! [ -x "$(command -v valet)" ]; then
   echo "
     Installing Laravel Valet...
@@ -102,6 +106,7 @@ if ! [ -x "$(command -v valet)" ]; then
   valet install
 fi
 
+# Install Laravel Installer
 if ! [ -x "$(command -v laravel)" ]; then
   echo "
     Installing Laravel Installer...
@@ -109,20 +114,21 @@ if ! [ -x "$(command -v laravel)" ]; then
   composer global require laravel/installer
 fi
 
+# Install MySQL and set up a default user
 if ! [ -x "$(command -v mysql)" ]; then
   echo "
     Installing MySQL...
   "
   sudo apt install mysql-server -y
-
   echo "
-    Creating mysql user
-    user: sail
+    Creating MySQL user:
+    username: sail
     password: password
   "
   sudo mysql -e "CREATE USER 'sail'@localhost IDENTIFIED BY 'password';GRANT ALL PRIVILEGES ON *.* TO 'sail'@localhost;FLUSH PRIVILEGES;"
 fi
 
+# Install Redis
 if ! [ -x "$(command -v redis-server)" ]; then
   echo "
     Installing Redis...
@@ -130,15 +136,16 @@ if ! [ -x "$(command -v redis-server)" ]; then
   sudo apt install redis-server -y
 fi
 
-if ! [ -x "$(command -v node -v)" ]; then
+# Install NVM, Node.js, and Yarn
+if ! [ -x "$(command -v node)" ]; then
   echo "
-    Installing NVM, Node and Yarn...
+    Installing NVM, Node.js, and Yarn...
   "
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-  nvm install 20
+  nvm install node
   npm install -g yarn
   yarn config set -- --emoji true
 fi
