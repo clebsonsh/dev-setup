@@ -2,7 +2,7 @@
 set -e
 
 if ! [ -x "$(command -v jq)" ]; then
-  sudo apt install jq -y &> /dev/null
+  sudo apt install jq tmux htop -y &> /dev/null
 fi
 
 data=$(curl 'https://php.watch/api/v1/versions' -s)
@@ -156,7 +156,13 @@ if ! [ -x "$(command -v node)" ]; then
   yarn config set -- --emoji true
 fi
 
+echo "
+        Setting up some alias in your .bashrc
+"
+
+wget -q -O - https://raw.githubusercontent.com/clebsonsh/dev-setup/main/bashrc >> ~/.bashrc
 
 echo "
         All set! Happy coding!
+        run 'source ~/.bashrc' to reload system paths
 "
