@@ -1,11 +1,13 @@
 # Setup for Full-Stack Laravel Development on Ubuntu 22.04
 
-This script automates the installation of the essential components required for Full-Stack Laravel development:
+This setup guide automates the installation of essential components required for Full-Stack Laravel development on Ubuntu 22.04.
+
+## Components Installed
 
 - **PHP**: Choose from versions 8.3, 8.2, 8.1, 8.0, 7.4
 - **Composer**
 - **Nginx**
-- **MySQL**
+- **MariaDB**
 - **Laravel Valet**
 - **Laravel Installer**
 - **NVM (Node Version Manager)**
@@ -14,35 +16,47 @@ This script automates the installation of the essential components required for 
 
 ## Getting Started
 
-Simply run the provided script to proceed with the setup process. The script will guide you through the installation of these components, allowing you to quickly set up a development environment for Full-Stack Laravel projects.
+Follow these steps to quickly set up your Full-Stack Laravel development environment:
 
-### Usage
+### Clone or Download the Script
 
-1. Clone this repository or download the script.
+Clone this repository or download the script directly.
 
-2. Open a terminal and navigate to the directory containing the script.
-
-3. Make the script executable, if necessary:
+- **Clone Repository:**
   ```bash
-    chmod +x setup.sh
+  git clone https://github.com/clebsonsh/dev-setup.git
   ```
 
-4. Run the script:
-  ``bash
-    ./setup.sh
-  ``
-
-5. Follow the prompts and instructions provided by the script to complete the installation.
-
-#### Alternati Usage
-
-1. Run this command in your terminal
+- **Download Script:**
   ```bash
-    wget -q -O - https://raw.githubusercontent.com/clebsonsh/dev-setup/main/setup.sh | bash
+  wget https://raw.githubusercontent.com/clebsonsh/dev-setup/main/setup.sh
   ```
 
-2. Follow the prompts and instructions provided by the script to complete the installation.
+### Navigate to the Script Directory
 
-Please ensure that you have appropriate permissions and meet system requirements before running the script. Adjustments can be made within the script to customize the installation process based on your specific preferences and environment.
+Open a terminal and change directory to the location where the script is saved.
+
+### Make the Script Executable
+
+If necessary, grant execute permissions to the script.
+
+```bash
+chmod +x setup.sh
+```
+
+### Run the Script
+
+Execute the script to start the automated setup process.
+
+```bash
+./setup.sh
+```
+
+Follow the prompts and instructions provided by the script to complete the installation.
+
+## Notes
+
+- Ensure you have appropriate permissions and meet system requirements before running the script.
+- Customize the installation process within the script to suit your specific preferences and environment.
 
 Enjoy developing with Laravel! 🚀
