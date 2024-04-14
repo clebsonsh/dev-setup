@@ -1,4 +1,4 @@
-# Development Environment Setup for Full-Stack Laravel Development on Ubuntu 22.04
+# Setup for Full-Stack Laravel Development on Ubuntu 22.04
 
 This script automates the installation of the essential components required for Full-Stack Laravel development:
 

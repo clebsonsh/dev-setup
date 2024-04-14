@@ -2,8 +2,6 @@
 set -e
 
 echo "
-  Development Environment Setup for Full-Stack Laravel Development
-
   This script automates the installation of the essential components required for Full-Stack Laravel development:
 
     - PHP (choose from versions 8.3, 8.2, 8.1, 8.0, 7.4)
