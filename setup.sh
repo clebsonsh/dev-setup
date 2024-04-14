@@ -1,10 +1,17 @@
 #!/bin/bash
 set -e
 
+if ! [ -x "$(command -v jq)" ]; then
+  sudo apt install jq -y &> /dev/null
+fi
+
+data=$(curl 'https://php.watch/api/v1/versions' -s)
+php_supported_versions=($(echo $data | jq ".. | select((.statusLabel? != \"Unsupported\") and .statusLabel? != \"Upcoming Release\").name" | jq "select(. != null)"))
+
 echo "
         This script automates the installation of the essential components required for Full-Stack Laravel development:
 
-          - PHP (choose from versions 8.3, 8.2, 8.1, 8.0, 7.4)
+          - PHP (choose from supported versions ${php_supported_versions[@]})
           - Composer
           - Nginx
           - MariaDB
@@ -15,22 +22,7 @@ echo "
           - Yarn
 "
 
-# Select PHP version if PHP is not already installed
-if ! [ -x "$(command -v php)" ]; then
-  echo "
-        Select a PHP version to install...
-  "
-  select PHP_VERSION in "8.3" "8.2" "8.1" "8.0" "7.4"
-  do
-    if ! [ -z "$PHP_VERSION" ]
-    then
-      echo "
-        Installing PHP $PHP_VERSION...
-      "
-      break
-    fi
-  done
-fi
+sleep 3
 
 # Add required repositories if not already added
 if ! grep -q "^deb .*universe" /etc/apt/sources.list; then
@@ -59,6 +51,23 @@ echo "
         Installing/updating dependencies for Laravel Valet...
 "
 sudo apt install git vim network-manager libnss3-tools jq xsel curl unzip -y
+
+# Select PHP version if PHP is not already installed
+if ! [ -x "$(command -v php)" ]; then
+  echo "
+        Select a supported PHP version to install...
+  "
+  select PHP_VERSION in "${php_supported_versions[@]}"
+  do
+    if ! [ -z "$PHP_VERSION" ]; then
+      PHP_VERSION="$(echo $PHP_VERSION | sed 's/\"//g')"
+      echo "
+        Installing PHP $PHP_VERSION...
+      "
+      break
+    fi
+  done
+fi
 
 # Install PHP and required PHP extensions
 if ! [ -x "$(command -v php)" ]; then
