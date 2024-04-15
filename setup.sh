@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-if ! [ -x "$(command -v jq)" ]; then
+if ! [ -x "$(command -v curl)" ]; then
   sudo apt install jq tmux htop curl -y &> /dev/null
 fi
 
