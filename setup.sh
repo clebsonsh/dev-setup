@@ -2,7 +2,7 @@
 set -e
 
 if ! [ -x "$(command -v jq)" ]; then
-  sudo apt install jq tmux htop -y &> /dev/null
+  sudo apt install jq tmux htop curl -y &> /dev/null
 fi
 
 data=$(curl 'https://php.watch/api/v1/versions' -s)
@@ -50,7 +50,7 @@ sudo apt upgrade -y
 echo "
         Installing/updating dependencies for Laravel Valet...
 "
-sudo apt install git vim network-manager libnss3-tools jq xsel curl unzip -y
+sudo apt install git vim network-manager libnss3-tools xsel unzip -y
 
 # Select PHP version if PHP is not already installed
 if ! [ -x "$(command -v php)" ]; then
