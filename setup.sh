@@ -14,14 +14,13 @@ echo "
           - Laravel Installer
           - NVM (Node Version Manager)
           - Yarn
+        
+        you will be prompt for sudo password a few times
 "
 
-if ! grep -q "^deb .*universe" /etc/apt/sources.list; then
-  echo "
-        Adding 'universe' repository...
-  "
-  sudo add-apt-repository universe -y
-fi
+sleep 5
+
+sudo add-apt-repository universe -y
 
 echo "
         Updating system packages...
@@ -228,9 +227,9 @@ wget -q -O - https://raw.githubusercontent.com/clebsonsh/dev-setup/main/dev_bash
 
 if ! grep -q ".dev_bashrc" ~/.bashrc; then
   echo "
-    if [ -f ~/.bash_aliases ]; then
-      . ~/.bash_aliases
-    fi
+if [ -f ~/.dev_bashrc]; then
+  . ~/.dev_bashrc
+fi
   " >> ~/.bashrc
 fi
 
