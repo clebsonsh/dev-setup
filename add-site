@@ -65,11 +65,11 @@ ok "done."
 # Restart Nginx
 working "Restarting NGINX"
 
-sudo systemctl restart user-nginx
+sudo systemctl restart nginx
 
 ok "done."
 
 # Add site to /etc/hosts
 if ! grep -q $PROJECT_NAME /etc/hosts; then
-    echo "127.0.0.1 $PROJECT_NAME.test" >> /etc/hosts
+    sudo echo "127.0.0.1 $PROJECT_NAME.test" >> /etc/hosts
 fi
