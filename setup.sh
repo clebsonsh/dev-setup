@@ -158,6 +158,8 @@ EOF
   sudo systemctl enable user-nginx
 fi
 
+
+PHP_VERSION=8.3
 if ! [ -x "$(command -v php)" ]; then
   echo "
         Installing PHP $PHP_VERSION and required extensions for Laravel...
@@ -169,18 +171,15 @@ if ! [ -x "$(command -v php)" ]; then
     "php$PHP_VERSION-common" \
     "php$PHP_VERSION-mysql" \
     "php$PHP_VERSION-sqlite3" \
-    "php$PHP_VERSION-swoole" \
     "php$PHP_VERSION-zip" \
     "php$PHP_VERSION-gd" \
     "php$PHP_VERSION-mbstring" \
     "php$PHP_VERSION-curl" \
     "php$PHP_VERSION-xml" \
     "php$PHP_VERSION-dev" \
-    "php$PHP_VERSION-redis" \
     "php$PHP_VERSION-bcmath" -yqq
 fi
 
-# Install Composer
 if ! [ -x "$(command -v composer)" ]; then
   echo "
         Installing Composer...
