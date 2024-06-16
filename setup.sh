@@ -189,17 +189,6 @@ if ! [ -x "$(command -v composer)" ]; then
   export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 fi
 
-# Install Laravel Valet
-if ! [ -x "$(command -v valet)" ]; then
-  echo "
-        Installing Laravel Valet...
-  "
-  composer global require cpriego/valet-linux
-  export PATH="$HOME/.config/composer/vendor/bin:$PATH"
-  valet install
-fi
-
-# Install Laravel Installer
 if ! [ -x "$(command -v laravel)" ]; then
   echo "
         Installing Laravel Installer...
