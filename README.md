@@ -1,17 +1,16 @@
 # Full-Stack Laravel Development Setup on Ubuntu 22.04
 
-This guide automates the installation of essential components required for Full-Stack Laravel development on Ubuntu 22.04.
+This guide automates the installation of essential components required for Full-Stack Laravel development on Ubuntu 24.04.
 
 ## Components Installed
 
-- **PHP**: Choose from supported versions (currently 8.3, 8.2, 8.1)
+- **PHP 8.3** 
+- **Node 20**
 - **Composer**
 - **Nginx**
 - **MariaDB**
-- **Laravel Valet**
 - **Laravel Installer**
 - **NVM (Node Version Manager)**
-- **Node.js**
 - **Yarn**
 
 ## Getting Started
