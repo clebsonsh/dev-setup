@@ -1,30 +1,21 @@
 #!/bin/bash
 set -e
 
-if ! [ -x "$(command -v curl)" ]; then
-  sudo apt install jq tmux htop curl -y &> /dev/null
-fi
-
-data=$(curl 'https://php.watch/api/v1/versions' -s)
-php_supported_versions=($(echo $data | jq ".. | select((.statusLabel? != \"Unsupported\") and .statusLabel? != \"Upcoming Release\").name" | jq "select(. != null)"))
+USER=$(whoami)
 
 echo "
         This script automates the installation of the essential components required for Full-Stack Laravel development:
 
-          - PHP (choose from supported versions ${php_supported_versions[@]})
+          - PHP 8.3
+          - Node 20
           - Composer
           - Nginx
-          - MariaDB
-          - Laravel Valet
+          - MariaDB (user: root with no password)
           - Laravel Installer
           - NVM (Node Version Manager)
-          - Node.js
           - Yarn
 "
 
-sleep 3
-
-# Add required repositories if not already added
 if ! grep -q "^deb .*universe" /etc/apt/sources.list; then
   echo "
         Adding 'universe' repository...
