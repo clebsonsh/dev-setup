@@ -13,6 +13,7 @@ PROJECT_NAME=$(basename $PROJECT_DIR)
 
 # Create nginx config file for live site
 working "Creating nginx config file for live site... "
+rm $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf
 cat > $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf <<EOF
 server {
     listen 80;
@@ -58,6 +59,7 @@ ok "done."
 # Enable site by creating symbolic link
 working "Enabling site... "
 
+rm $NGINX_ENABLED_VHOSTS/$PROJECT_NAME.conf
 ln -s $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf $NGINX_ENABLED_VHOSTS/
 
 ok "done."
