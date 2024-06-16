@@ -205,15 +205,6 @@ if ! [ -x "$(command -v mysql)" ]; then
   sudo mysql -e "alter user root@localhost identified via '';FLUSH PRIVILEGES;"
 fi
 
-# Install Redis
-if ! [ -x "$(command -v redis-server)" ]; then
-  echo "
-        Installing Redis...
-  "
-  sudo apt install redis-server -y
-fi
-
-# Install NVM, Node.js, and Yarn
 if ! [ -x "$(command -v node)" ]; then
   echo "
         Installing NVM, Node.js, and Yarn...
