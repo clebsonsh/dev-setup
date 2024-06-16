@@ -32,20 +32,18 @@ sudo apt upgrade -y
 echo "
         Installing basic tools...
 "
-mkdir ~/.local
-mkdir ~/.local/bin
+mkdir -p ~/.local/bin
 wget -q -O - https://raw.githubusercontent.com/clebsonsh/dev-setup/main/add-site >> ~/.local/bin/add-site
 chmod +x ~/.local/bin/add-site
 
-mkdir ~/.dev
-mkdir ~/.dev/sites-available
-mkdir ~/.dev/sites-enabled
+mkdir -p ~/.dev/sites-available
+mkdir -p ~/.dev/sites-enabled
 
 
 sudo apt install htop curl git vim unzip -y
 curl -s https://ohmyposh.dev/install.sh | sudo bash -s
 
-mkdir ~/.config/omp
+mkdir -p ~/.config/omp
 if [ -f ~/.config/omp/theme.omp.json ]; then
   wget -q -O - https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/clean-detailed.omp.json >> ~/.config/omp/theme.omp.json
 fi
