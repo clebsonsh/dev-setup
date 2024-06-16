@@ -213,38 +213,13 @@ if ! [ -x "$(command -v node)" ]; then
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-  echo "
-        Installing Node 12...
-  "
-  nvm install 12
-  npm install -g yarn
-  yarn config set -- --emoji true
-  echo "
-        Installing Node 14...
-  "
-  nvm install 14
-  npm install -g yarn
-  yarn config set -- --emoji true
-  echo "
-        Installing Node 16...
-  "
-  nvm install 16
-  npm install -g yarn
-  yarn config set -- --emoji true
-  echo "
-        Installing Node 18...
-  "
-  nvm install 18
-  npm install -g yarn
-  yarn config set -- --emoji true
+
   echo "
         Installing Node 20...
   "
   nvm install 20
   npm install -g yarn
   yarn config set -- --emoji true
-
-  nvm use 20
 fi
 
 echo "
