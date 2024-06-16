@@ -47,13 +47,12 @@ if [ -f ~/.config/omp/theme.omp.json ]; then
   wget -q -O - https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/clean-detailed.omp.json >> ~/.config/omp/theme.omp.json
 fi
 
-if ! [ -x "$(command -v nginx)"]; then
-  echo "
-    Installing NGINX
-  "
-  sudo apt install nginx -y
-  sudo cat > /home/$USER/.dev/nginx.conf <<EOF
-  user $USER;
+echo "
+        Installing NGINX
+"
+sudo apt install nginx -y
+sudo cat > /home/$USER/.dev/nginx.conf <<EOF
+user $USER;
 worker_processes auto;
 pid /run/nginx.pid;
 error_log /var/log/nginx/error.log;
@@ -115,7 +114,7 @@ http {
 	include /home/$USER/.dev/sites-enabled/*;
 }
 EOF
-  sudo cat > /etc/systemd/system/user-nginx.service <<EOF
+sudo cat > /etc/systemd/system/user-nginx.service <<EOF
   # Stop dance for nginx
 # =======================
 #
@@ -148,12 +147,11 @@ KillMode=mixed
 WantedBy=multi-user.target
 
 EOF
-  sudo systemctl stop nginx
-  sudo systemctl disable nginx
+sudo systemctl stop nginx
+sudo systemctl disable nginx
 
-  sudo systemctl start user-nginx
-  sudo systemctl enable user-nginx
-fi
+sudo systemctl start user-nginx
+sudo systemctl enable user-nginx
 
 
 PHP_VERSION=8.3
