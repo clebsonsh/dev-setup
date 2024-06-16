@@ -202,12 +202,7 @@ if ! [ -x "$(command -v mysql)" ]; then
         Installing MariaDB...
   "
   sudo apt install mariadb-server -y
-  echo "
-        Creating MariaDB user:
-        username: sail
-        password: password
-  "
-  sudo mysql -e "CREATE USER 'sail'@localhost IDENTIFIED BY 'password';GRANT ALL PRIVILEGES ON *.* TO 'sail'@localhost;FLUSH PRIVILEGES;"
+  sudo mysql -e "alter user root@localhost identified via '';FLUSH PRIVILEGES;"
 fi
 
 # Install Redis
