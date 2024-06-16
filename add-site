@@ -1,0 +1,77 @@
+#!/bin/bash
+
+USER=$(whoami)
+# Functions
+ok() { echo -e '\e[32m'$1'\e[m'; } # Green
+working() { echo -ne '\e[1;33m'$1'\e[m'; } # Yellow
+die() { echo -e '\e[1;31m'$1'\e[m'; exit 1; }
+
+# Variables
+NGINX_AVAILABLE_VHOSTS="/home/$USER/.dev/sites-available"
+NGINX_ENABLED_VHOSTS="/home/$USER/.dev//sites-enabled"
+PROJECT_DIR=$PWD
+PROJECT_NAME=$(basename $PROJECT_DIR)
+
+# Create nginx config file for live site
+working "Creating nginx config file for live site... "
+sudo cat > $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf <<EOF
+server {
+    listen 80;
+    listen [::]:80;
+    server_name $PROJECT_NAME.test;
+
+    root $PROJECT_DIR/public;
+
+    access_log $PROJECT_DIR/storage/logs/access.log;
+    error_log $PROJECT_DIR/storage/logs/error.log;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+
+    index index.php;
+
+    charset utf-8;
+
+    location / {
+        try_files \$uri \$uri/ /index.php?\$query_string;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+	fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+        include fastcgi_params;
+        fastcgi_hide_header X-Powered-By;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
+EOF
+
+ok "done."
+
+# Enable site by creating symbolic link
+working "Enabling site... "
+
+sudo ln -s $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf $NGINX_ENABLED_VHOSTS/
+
+ok "done."
+
+# Restart Nginx
+working "Restarting NGINX"
+
+sudo systemctl restart user-nginx
+
+ok "done."
+
+# Add site to /etc/hosts
+if ! grep -q $PROJECT_NAME /etc/hosts; then
+    echo "Adding site to /etc/hosts"
+    sudo echo "127.0.0.1 $PROJECT_NAME.test" >> /etc/hosts
+fi
