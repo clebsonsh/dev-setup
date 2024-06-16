@@ -1,11 +1,11 @@
+export PATH="$HOME/.local/bin:$PATH"
 
 alias upd='sudo apt update; sudo apt upgrade -y'
 alias top='htop'
 alias log='tail -f storage/logs/laravel-$(date +%F).log'
-alias logs='tmux \
-  new-session  "tail -f storage/logs/laravel-$(date +%F).log ; read" \; \
-  split-window "tail -f storage/logs/worker.log ; read" \; \
-  select-layout even-vertical'
+
+alias pup="curl -s https://ohmyposh.dev/install.sh | sudo bash -s"
+eval "$(oh-my-posh init bash --config='~/.config/omp/theme.omp.json')"
 
 # git give up
 nah () {
