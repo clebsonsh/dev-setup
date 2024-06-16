@@ -223,10 +223,18 @@ if ! [ -x "$(command -v node)" ]; then
 fi
 
 echo "
-        Setting up some alias in your .bashrc
+        Setting up some alias and functions in your .bashrc
 "
 
-wget -q -O - https://raw.githubusercontent.com/clebsonsh/dev-setup/main/bashrc >> ~/.bashrc
+wget -q -O - https://raw.githubusercontent.com/clebsonsh/dev-setup/main/dev_bashrc >> ~/.dev_bashrc
+
+if ! grep -q ".dev_bashrc" ~/.bashrc; then
+  echo "
+    if [ -f ~/.bash_aliases ]; then
+      . ~/.bash_aliases
+    fi
+  " >> ~/.bashrc
+fi
 
 echo "
         All set! Happy coding!
