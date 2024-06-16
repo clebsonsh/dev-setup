@@ -1,14 +1,13 @@
 #!/bin/bash
 
-USER=$(whoami)
 # Functions
 ok() { echo -e '\e[32m'$1'\e[m'; } # Green
 working() { echo -ne '\e[1;33m'$1'\e[m'; } # Yellow
 die() { echo -e '\e[1;31m'$1'\e[m'; exit 1; }
 
 # Variables
-NGINX_AVAILABLE_VHOSTS="/home/$USER/.dev/sites-available"
-NGINX_ENABLED_VHOSTS="/home/$USER/.dev/sites-enabled"
+NGINX_AVAILABLE_VHOSTS='/etc/nginx/sites-available'
+NGINX_ENABLED_VHOSTS='/etc/nginx/sites-enabled'
 PROJECT_DIR=$PWD
 PROJECT_NAME=$(basename $PROJECT_DIR)
 
@@ -72,6 +71,5 @@ ok "done."
 
 # Add site to /etc/hosts
 if ! grep -q $PROJECT_NAME /etc/hosts; then
-    echo "Adding site to /etc/hosts"
-    sudo echo "127.0.0.1 $PROJECT_NAME.test" >> /etc/hosts
+    echo "127.0.0.1 $PROJECT_NAME.test" >> /etc/hosts
 fi
