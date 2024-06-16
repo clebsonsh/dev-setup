@@ -8,13 +8,13 @@ die() { echo -e '\e[1;31m'$1'\e[m'; exit 1; }
 
 # Variables
 NGINX_AVAILABLE_VHOSTS="/home/$USER/.dev/sites-available"
-NGINX_ENABLED_VHOSTS="/home/$USER/.dev//sites-enabled"
+NGINX_ENABLED_VHOSTS="/home/$USER/.dev/sites-enabled"
 PROJECT_DIR=$PWD
 PROJECT_NAME=$(basename $PROJECT_DIR)
 
 # Create nginx config file for live site
 working "Creating nginx config file for live site... "
-sudo cat > $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf <<EOF
+cat > $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf <<EOF
 server {
     listen 80;
     listen [::]:80;
@@ -59,7 +59,7 @@ ok "done."
 # Enable site by creating symbolic link
 working "Enabling site... "
 
-sudo ln -s $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf $NGINX_ENABLED_VHOSTS/
+ln -s $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf $NGINX_ENABLED_VHOSTS/
 
 ok "done."
 

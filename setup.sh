@@ -32,7 +32,7 @@ echo "
         Installing basic tools...
 "
 mkdir -p ~/.local/bin
-wget -q -O - https://raw.githubusercontent.com/clebsonsh/dev-setup/main/add-site >> ~/.local/bin/add-site
+wget -q -O - https://raw.githubusercontent.com/clebsonsh/dev-setup/main/add-site > ~/.local/bin/add-site
 chmod +x ~/.local/bin/add-site
 
 mkdir -p ~/.dev/sites-available
