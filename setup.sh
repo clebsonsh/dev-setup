@@ -75,7 +75,7 @@ fi
 
 sudo sed -i "s/www-data/$USER/" /etc/php/8.3/fpm/pool.d/www.conf
 
-sudo systemctl restart php-fpm
+sudo systemctl restart php8.3-fpm
 
 if ! [ -x "$(command -v composer)" ]; then
   echo "
