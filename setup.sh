@@ -23,14 +23,6 @@ if ! grep -q "^deb .*universe" /etc/apt/sources.list; then
   sudo add-apt-repository universe -y
 fi
 
-if ! [ -e "/etc/apt/sources.list.d/ondrej-ubuntu-php-jammy.list" ]; then
-  echo "
-        Adding 'ondrej/php' PPA repository...
-  "
-  sudo add-apt-repository ppa:ondrej/php -y
-fi
-
-# Update system packages
 echo "
         Updating system packages...
 "
