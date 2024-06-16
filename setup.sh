@@ -48,7 +48,7 @@ echo "
         Installing NGINX
 "
 sudo apt install nginx -y
-sudo sed -i "s/user www-data/user $USER/" /etc/nginx/nginx.conf
+sudo sed -i "s/www-data/$USER/" /etc/nginx/nginx.conf
 
 sudo systemctl restart nginx
 
@@ -72,6 +72,10 @@ if ! [ -x "$(command -v php)" ]; then
     "php$PHP_VERSION-dev" \
     "php$PHP_VERSION-bcmath" -yqq
 fi
+
+sudo sed -i "s/www-data/$USER/" /etc/php/8.3/fpm/pool.d/www.conf
+
+sudo systemctl restart php-fpm
 
 if ! [ -x "$(command -v composer)" ]; then
   echo "
