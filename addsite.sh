@@ -1,20 +1,16 @@
 #!/bin/bash
 
-# Functions
-ok() { echo -e '\e[32m'$1'\e[m'; } # Green
+ok() { echo -e '\e[32m'$1'\e[m'; }         # Green
 working() { echo -ne '\e[1;33m'$1'\e[m'; } # Yellow
-die() { echo -e '\e[1;31m'$1'\e[m'; exit 1; }
 
-# Variables
 NGINX_AVAILABLE_VHOSTS='/etc/nginx/sites-available'
 NGINX_ENABLED_VHOSTS='/etc/nginx/sites-enabled'
 PROJECT_DIR=$PWD
 PROJECT_NAME=$(basename $PROJECT_DIR)
 
-# Create nginx config file for live site
-working "Creating nginx config file for live site... "
+working "Creating nginx config file for this site... "
 rm $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf
-cat > $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf <<EOF
+cat >$NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf <<EOF
 server {
     listen 80;
     listen [::]:80;
@@ -54,24 +50,25 @@ server {
 }
 EOF
 
-ok "done."
+ok "Done."
 
-# Enable site by creating symbolic link
 working "Enabling site... "
 
 rm $NGINX_ENABLED_VHOSTS/$PROJECT_NAME.conf
 ln -s $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf $NGINX_ENABLED_VHOSTS/
 
-ok "done."
+ok "Done."
 
-# Restart Nginx
 working "Restarting NGINX"
 
 systemctl restart nginx
 
-ok "done."
+ok "Done."
 
-# Add site to /etc/hosts
+working "Adding site to /etc/hosts"
+
 if ! grep -q $PROJECT_NAME /etc/hosts; then
-    echo "127.0.0.1 $PROJECT_NAME.test" >> /etc/hosts
+  echo "127.0.0.1 $PROJECT_NAME.test" >>/etc/hosts
 fi
+
+ok "Done. Site fully added"
