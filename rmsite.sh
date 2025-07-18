@@ -11,24 +11,25 @@ PROJECT_DIR=$PWD
 PROJECT_NAME=$(basename $PROJECT_DIR)
 
 working "Removing nginx config file for this site... "
-rm $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf
+
+rm -f $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf
 
 ok "Done."
 
 working "Removing symbolic link..."
 
-rm $NGINX_ENABLED_VHOSTS/$PROJECT_NAME.conf
+rm -f $NGINX_ENABLED_VHOSTS/$PROJECT_NAME.conf
 
 ok "Done."
 
-working "Restarting NGINX"
+working "Restarting NGINX... "
 
 systemctl restart nginx
 
 ok "Done."
 
-working "Removing site from /etc/hosts"
+working "Removing site from /etc/hosts... "
 
 sed -i /$PROJECT_NAME.test/d /etc/hosts
 
-ok "Done. Site fully removed"
+ok "Done. Site fully removed!"

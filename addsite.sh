@@ -9,7 +9,9 @@ PROJECT_DIR=$PWD
 PROJECT_NAME=$(basename $PROJECT_DIR)
 
 working "Creating nginx config file for this site... "
-rm $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf
+
+rm -f $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf
+
 cat >$NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf <<EOF
 server {
     listen 80;
@@ -54,21 +56,22 @@ ok "Done."
 
 working "Enabling site... "
 
-rm $NGINX_ENABLED_VHOSTS/$PROJECT_NAME.conf
+rm -f $NGINX_ENABLED_VHOSTS/$PROJECT_NAME.conf
+
 ln -s $NGINX_AVAILABLE_VHOSTS/$PROJECT_NAME.conf $NGINX_ENABLED_VHOSTS/
 
 ok "Done."
 
-working "Restarting NGINX"
+working "Restarting NGINX... "
 
 systemctl restart nginx
 
 ok "Done."
 
-working "Adding site to /etc/hosts"
+working "Adding site to /etc/hosts... "
 
 if ! grep -q $PROJECT_NAME /etc/hosts; then
   echo "127.0.0.1 $PROJECT_NAME.test" >>/etc/hosts
 fi
 
-ok "Done. Site fully added"
+ok "Done. Site fully added!"
