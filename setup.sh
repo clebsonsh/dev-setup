@@ -110,9 +110,10 @@ if ! [ -x "$(command -v node)" ]; then
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
   echo "
-        Installing Node 20...
+        Installing Node 22...
   "
   nvm install 22
+  npm install -g npm
   npm install -g yarn
   yarn config set -- --emoji true
 fi
