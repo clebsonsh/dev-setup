@@ -17,7 +17,7 @@ echo "
         you will be prompt for sudo password a few times
 "
 
-sleep 5
+sleep 10
 
 sudo add-apt-repository universe -y
 
